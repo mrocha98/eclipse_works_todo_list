@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import 'module_page.dart';
@@ -23,4 +24,8 @@ abstract class Module {
           ),
         ),
       );
+
+  /// get a read-only copy of binds or a list with one dummy provider
+  List<SingleChildWidget> get binds =>
+      _binds?.toList(growable: false) ?? [Provider(create: (_) => Object())];
 }
