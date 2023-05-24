@@ -26,3 +26,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Source Sans Pro
+      fonts:
+        - asset: assets/fonts/source-sans-pro-v21-latin-regular.ttf
+          style: normal
+          weight: 400

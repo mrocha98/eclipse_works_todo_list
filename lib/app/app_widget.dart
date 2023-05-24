@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'core/ui/theme/dark_theme.dart';
+import 'core/ui/theme/light_theme.dart';
 import 'modules/theme_mode/theme_mode_controller.dart';
+import 'modules/todo_list/todo_list_module.dart';
 
-class AppWidget extends StatelessWidget {
+class AppWidget extends StatefulWidget {
   const AppWidget({super.key});
+
+  @override
+  State<AppWidget> createState() => _AppWidgetState();
+}
+
+class _AppWidgetState extends State<AppWidget> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await context.read<ThemeModeController>().init();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,36 +31,11 @@ class AppWidget extends StatelessWidget {
       themeMode: context.select<ThemeModeController, ThemeMode?>(
         (controller) => controller.themeMode,
       ),
-      darkTheme: ThemeData.dark(),
-      home: Scaffold(
-        appBar: AppBar(
-          actions: [
-            Selector<ThemeModeController, ThemeMode?>(
-              selector: (context, controller) => controller.themeMode,
-              builder: (context, themeMode, _) {
-                return Visibility(
-                  visible: themeMode == ThemeMode.light,
-                  replacement: IconButton(
-                    onPressed: () => context
-                        .read<ThemeModeController>()
-                        .changeTheme(ThemeMode.light),
-                    icon: const Icon(Icons.light_mode),
-                  ),
-                  child: IconButton(
-                    onPressed: () => context
-                        .read<ThemeModeController>()
-                        .changeTheme(ThemeMode.dark),
-                    icon: const Icon(Icons.dark_mode),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-        body: const Center(
-          child: Text('Bem começado, metade feito'),
-        ),
-      ),
+      theme: LightTheme.theme,
+      darkTheme: DarkTheme.theme,
+      routes: {
+        ...TodoListModule().routes,
+      },
     );
   }
 }

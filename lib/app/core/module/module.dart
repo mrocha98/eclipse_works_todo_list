@@ -25,7 +25,7 @@ abstract class Module {
         ),
       );
 
-  /// get a read-only copy of binds or a list with one dummy provider
+  /// get a read-only copy of binds or a list with single dummy provider
   List<SingleChildWidget> get binds =>
       _binds?.toList(growable: false) ?? [Provider(create: (_) => Object())];
 }
