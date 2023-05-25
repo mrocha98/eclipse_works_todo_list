@@ -42,4 +42,12 @@ class KeyValueStorageSharedPreferencesImpl implements KeyValueStorage {
         );
     }
   }
+
+  @override
+  Future<List<String>?> getStringList(String key) async =>
+      _sharedPreferences.getStringList(key);
+
+  @override
+  Future<void> setStringList(String key, List<String> values) async =>
+      _sharedPreferences.setStringList(key, values);
 }
