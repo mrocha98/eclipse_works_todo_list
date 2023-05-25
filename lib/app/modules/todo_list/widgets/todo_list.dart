@@ -16,28 +16,41 @@ class TodoList extends StatelessWidget {
       child: BlocSelector<TodoListCubit, TodoListState, List<TodoItemModel>>(
         selector: (state) => state.filteredTodos,
         bloc: context.read<TodoListCubit>(),
-        builder: (context, filteredTodos) => ListView.separated(
-          itemBuilder: (context, index) {
-            final todo = filteredTodos.elementAt(index);
-            return TodoItemDismissible(
-              todo: todo,
-              child: CheckboxListTile(
-                activeColor: Theme.of(context).primaryColor,
-                value: todo.isDone,
-                onChanged: (_) =>
-                    context.read<TodoListCubit>().checkOrUncheck(todo),
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text(
-                  todo.content,
-                  style: TextStyle(
-                    decoration: todo.isDone ? TextDecoration.lineThrough : null,
+        builder: (context, filteredTodos) => Visibility(
+          visible: filteredTodos.isNotEmpty,
+          replacement: const Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Text(
+                r'nothing to show here ¯\_(ツ)_/¯',
+              ),
+            ),
+          ),
+          child: ListView.separated(
+            itemBuilder: (context, index) {
+              final todo = filteredTodos.elementAt(index);
+              return TodoItemDismissible(
+                todo: todo,
+                child: CheckboxListTile(
+                  activeColor: Theme.of(context).primaryColor,
+                  value: todo.isDone,
+                  onChanged: (_) =>
+                      context.read<TodoListCubit>().checkOrUncheck(todo),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: Text(
+                    todo.content,
+                    style: TextStyle(
+                      decoration:
+                          todo.isDone ? TextDecoration.lineThrough : null,
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-          separatorBuilder: (_, __) => const Divider(),
-          itemCount: filteredTodos.length,
+              );
+            },
+            separatorBuilder: (_, __) => const Divider(),
+            itemCount: filteredTodos.length,
+          ),
         ),
       ),
     );
