@@ -5,6 +5,8 @@ import '../../core/database/key_value_storage/key_value_storage.dart';
 import '../../core/module/module.dart';
 import '../../repositories/todo_list/todo_item_repository.dart';
 import '../../repositories/todo_list/todo_item_repository_impl.dart';
+import '../../services/todo_item/todo_item_service.dart';
+import '../../services/todo_item/todo_item_service_impl.dart';
 import 'todo_list_cubit.dart';
 import 'todo_list_page.dart';
 
@@ -19,8 +21,15 @@ class TodoListModule extends Module {
                 context.read<IdGenerator>(),
               ),
             ),
+            Provider<TodoItemService>(
+              create: (context) => TodoItemServiceImpl(
+                context.read<TodoItemRepository>(),
+              ),
+            ),
             Provider<TodoListCubit>(
-              create: (context) => TodoListCubit(),
+              create: (context) => TodoListCubit(
+                context.read<TodoItemService>(),
+              ),
             ),
           ],
         );
