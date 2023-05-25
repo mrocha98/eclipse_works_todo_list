@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 import 'core/ui/theme/dark_theme.dart';
@@ -36,6 +37,7 @@ class _AppWidgetState extends State<AppWidget> {
       routes: {
         ...TodoListModule().routes,
       },
+      builder: EasyLoading.init(),
     );
   }
 }

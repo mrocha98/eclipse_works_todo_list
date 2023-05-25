@@ -4,5 +4,5 @@ import 'id_generator.dart';
 
 class IdGeneratorSlugIdImpl implements IdGenerator {
   @override
-  String generate() => Slugid.v4().uuid();
+  String generate() => Slugid.v4().toString();
 }

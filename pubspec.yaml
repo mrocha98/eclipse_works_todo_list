@@ -19,6 +19,7 @@ dependencies:
   meta: ^1.9.1
   clock: ^1.1.1
   slugid: ^1.1.2
+  flutter_easyloading: ^3.0.5
 
 dev_dependencies:
   flutter_test:
