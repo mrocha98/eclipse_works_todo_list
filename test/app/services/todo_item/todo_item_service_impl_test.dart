@@ -72,4 +72,21 @@ void main() {
       expect(list, expectedList);
     });
   });
+
+  group('.checkOrUncheck', () {
+    test('should call TodoItemRepository.checkOrUncheck', () async {
+      final todo = TodoItemModel(
+        id: faker.datatype.uuid(),
+        content: faker.lorem.sentence(),
+        isDone: faker.datatype.boolean(),
+        createdAt: faker.datatype.dateTime(),
+      );
+      when(() => todoItemRepositoryMock.checkOrUncheck(todo))
+          .thenAnswer((_) async {});
+
+      await sut.checkOrUncheck(todo);
+
+      verify(() => todoItemRepositoryMock.checkOrUncheck(todo)).called(1);
+    });
+  });
 }

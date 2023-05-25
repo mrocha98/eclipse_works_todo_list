@@ -221,4 +221,33 @@ void main() {
       expect(list, existent);
     });
   });
+
+  group('.checkOrUncheck', () {
+    test(
+      'should update the list inverting isDone of the provided todo',
+      () async {
+        final todoA =
+            createFakeTodoItemModel().copyWith(id: 'A', isDone: false);
+        final todoB =
+            createFakeTodoItemModel().copyWith(id: 'B', isDone: false);
+        final todoC = createFakeTodoItemModel().copyWith(id: 'C', isDone: true);
+        final existent = [todoA.toJson(), todoB.toJson(), todoC.toJson()];
+        final updated = [
+          todoA.toJson(),
+          todoB.copyWith(isDone: true).toJson(),
+          todoC.toJson(),
+        ];
+        when(() => keyValueStorageMock.getStringList(todoListKey)).thenAnswer(
+          (_) async => existent,
+        );
+        when(() => keyValueStorageMock.setStringList(todoListKey, updated))
+            .thenAnswer((_) async {});
+
+        await sut.checkOrUncheck(todoB);
+
+        verify(() => keyValueStorageMock.setStringList(todoListKey, updated))
+            .called(1);
+      },
+    );
+  });
 }

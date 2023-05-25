@@ -51,4 +51,17 @@ class TodoItemRepositoryImpl implements TodoItemRepository {
     if (list == null) return [];
     return list.map(TodoItemModel.fromJson).toList(growable: false);
   }
+
+  @override
+  Future<void> checkOrUncheck(TodoItemModel todo) async {
+    final list = await getAll();
+    final listWithUpdates = list
+        .map(
+          (item) => item.id == todo.id
+              ? todo.copyWith(isDone: !todo.isDone).toJson()
+              : item.toJson(),
+        )
+        .toList(growable: false);
+    await _keyValueStorage.setStringList(_todoListKey, listWithUpdates);
+  }
 }

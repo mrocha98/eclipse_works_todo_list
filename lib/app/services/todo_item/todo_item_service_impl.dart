@@ -16,4 +16,8 @@ class TodoItemServiceImpl implements TodoItemService {
 
   @override
   Future<List<TodoItemModel>> getAll() => _todoItemRepository.getAll();
+
+  @override
+  Future<void> checkOrUncheck(TodoItemModel todo) =>
+      _todoItemRepository.checkOrUncheck(todo);
 }

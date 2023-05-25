@@ -60,4 +60,11 @@ class TodoListCubit extends Cubit<TodoListState> {
     final filtered = _filter(filterType, state.todos);
     emit(state.copyWith(filterType: filterType, filteredTodos: filtered));
   }
+
+  Future<void> checkOrUncheck(TodoItemModel todo) async {
+    emit(state.copyWith(status: TodoListStatus.loading));
+
+    await _todoItemService.checkOrUncheck(todo);
+    await loadTodos();
+  }
 }

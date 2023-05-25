@@ -7,4 +7,5 @@ abstract interface class TodoItemService {
   });
   Future<void> delete(String id);
   Future<List<TodoItemModel>> getAll();
+  Future<void> checkOrUncheck(TodoItemModel todo);
 }
